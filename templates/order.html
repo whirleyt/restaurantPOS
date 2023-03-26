@@ -1,0 +1,124 @@
+<html>
+
+<style>
+
+    body {
+        color: white;
+        font-family: Monaco;
+        font-size: 13pt;
+    }
+    .split {
+      height: 100%;
+      width: 50%;
+      position: fixed;
+      z-index: 1;
+      top: 0;
+      overflow-x: hidden;
+      padding-top: 20px;
+    }
+
+    .left {
+      left: 0;
+      background-color: rgb(95, 210, 251);
+    }
+
+    .right {
+      right: 0;
+      background-color: rgb(77, 122, 248);
+    }
+
+    .centered {
+      position: absolute;
+      top: 40%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+    }
+
+
+    p {
+      display: inline;
+      padding-left: 10px;
+      padding-right: 10px;
+    }
+
+    h3 {
+        color: rgb(77, 122, 248)
+    }
+
+    .top {
+        padding-top: 20px;
+    }
+
+    button {
+        display: inline;
+        padding-left: 5px;
+        background-color: rgb(95, 210, 251);
+        color: white;
+        border-radius: 12px;
+        padding: 14px;
+        text-align: center;
+        display: inline-block;
+        font-size: 13px;
+        margin: 3px 2px;
+        border: 2px solid white;
+      }
+
+      .btn {
+        background: none;
+        padding: 0px;
+        border: none;
+       }
+
+</style>
+<script>
+
+</script>
+<body>
+<div class="split left">
+    <a style="color:purple; padding-top: 20px;" href="/">Home</a>
+    <div class="top centered">
+        {% if data[0] != null %}
+        <h2>Order Details</h2>
+        {% for n in data %}
+        <div>
+            <p>{{n[0]}}</p>
+            <p>${{n[1]}}</p>
+        </div>
+        {% endfor %}
+        <h3>Total: ${{total[0][0]}}</h3>
+        {% endif %}
+    </div>
+</div>
+
+<div class="split right">
+    <div class="centered">
+        <a href="/order/{{urlid[0][0]}}/2"><button>Snack</button></a>
+        <a href="/order/{{urlid[0][0]}}/1"><button>Appetizer</button></a>
+        <a href="/order/{{urlid[0][0]}}/3"><button>Entree</button></a>
+        <a href="/order/{{urlid[0][0]}}/12"><button>Dessert</button></a>
+        <div class="top">
+            {% for n in menuItem %}
+            <div>
+                <button style="background-color: rgb(160, 176, 253); display:inline;">{{n[0]}}</button>
+                <form style="display:inline;" method="POST" action="/order/{{urlid[0]}}">
+                    <div style="display:inline;">
+                        <button type="submit" id="add-order" class="btn">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="white" class="bi bi-plus-circle" viewBox="0 0 16 16">
+                                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                            </svg>
+                        </button>
+                    </div>
+                    <div style="display: none">
+                        <input name="table_ID" id="table_ID" value="{{urlid[0][0]}}" />
+                        <input name="menu_item_ID" id="menu_item_ID" value="{{n[1]}}" />
+                    </div>
+                </form>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+</body>
+</html>
