@@ -7,7 +7,6 @@ import os
 from sqlalchemy import *
 from sqlalchemy.pool import NullPool
 from flask import Flask, request, render_template, g, redirect, Response, url_for
-from django.urls import re_path as url
 
 tmpl_dir = os.path.join(os.path.dirname(
     os.path.abspath(__file__)), 'templates')
@@ -84,7 +83,39 @@ def teardown_request(exception):
 # see for routing: https://flask.palletsprojects.com/en/1.1.x/quickstart/#routing
 # see for decorators: http://simeonfranklin.com/blog/2012/jul/1/python-decorators-in-12-steps/
 #
+
+@app.route('/login/', methods=['POST', 'GET'])
+def login():
+    if request.method == "POST":
+      username=request.form['username']
+      password=request.form['password']
+      arr= username.split(" ")
+      first= arr[0]
+      last= arr[1]
+      select_employee_query = "SELECT e.firstName, e.lastName, e.employeeID FROM Employee e WHERE e.firstName='"+first+"' and e.lastName='"+last+"';"
+      cursor = g.conn.execute(text(select_employee_query))
+      user = []
+      for result in cursor:
+        user.append(result)
+      cursor.close()
+      g.conn.commit()
+      if(user[0][2] != int(password)):
+        error = dict(error=True)
+        return render_template("user_login.html", **error)
+        # return redirect(url_for('login', error=True))
+      else:
+        return redirect(url_for('index'))
+    error = dict(error=False)
+    return render_template("user_login.html", **error)
+
+
+
 @app.route('/')
+def default():
+    return redirect(url_for('login'))
+
+
+@app.route('/tables', methods=['POST', 'GET'])
 def index():
     """
     request is a special object that Flask provides to access web request information:
@@ -120,20 +151,6 @@ def index():
     # context are the variables that are passed to the template.
     # for example, "data" key in the context variable defined below will be
     # accessible as a variable in index.html:
-    #
-    #     # will print: [u'grace hopper', u'alan turing', u'ada lovelace']
-    #     <div>{{data}}</div>
-    #
-    #     # creates a <div> tag for each element in data
-    #     # will print:
-    #     #
-    #     #   <div>grace hopper</div>
-    #     #   <div>alan turing</div>
-    #     #   <div>ada lovelace</div>
-    #     #
-    #     {% for n in data %}
-    #     <div>{{n}}</div>
-    #     {% endfor %}
     #
     context = dict(data=tables)
 
@@ -233,10 +250,10 @@ def add(id):
     return redirect('/')
 
 
-@app.route('/login')
-def login():
-    abort(401)
-    this_is_never_executed()
+# @app.route('/login')
+# def login():
+#     abort(401)
+#     this_is_never_executed()
 
 
 if __name__ == "__main__":

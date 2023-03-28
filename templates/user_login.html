@@ -1,0 +1,58 @@
+<html>
+<style>
+    body {
+        background-color: rgb(77, 122, 248);
+        font-family: Monaco;
+    }
+
+    p {
+        font-size: smaller;
+    }
+
+    #forms {
+        padding-top: 20%;
+    }
+    #input {
+        padding-top: 5px;
+        padding-bottom: 5px;
+    }
+
+    #error {
+        padding-top: 1px;
+        padding-bottom: 1px;
+    }
+
+    input {
+      padding: 10px 10px 10px 10px;
+      border-radius: 10px;
+      font-size: 18px;
+      color:rgb(160, 176, 253)
+    }
+
+    button {
+        border-radius: 200px;
+        padding: 10px 10px 10px 10px;
+        font-size: 15px;
+    }
+  </style>
+<body>
+<div>
+  <div id="forms" style="text-align:center">
+    <form id="form_login" method="POST" action="">
+      <div id="input">
+        <input type="text" name="username" id="username" placeholder="Full name" />
+      </div>
+      <div id="input">
+        <input type="password" name="password" id="password" placeholder="Employee ID" />
+      </div>
+      {% if error == True %}
+      <div id="error"><p style="color:red">Error: Name or employee id is incorrect.</p></div>
+      {% endif %}
+      <div id="input">
+        <button id="submit" type="submit" style="background-color:rgb(160, 176, 253)">Login</button>
+      </div>
+    </form>
+  </div>
+</div>
+</body>
+</html>
