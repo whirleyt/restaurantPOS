@@ -1,9 +1,9 @@
 <html>
 <style>
     body {
-      color: white;
-      font-family: Monaco;
-      font-size: 13pt;
+        color: white;
+        font-family: Monaco;
+        font-size: 13pt;
     }
     .split {
       height: 100%;
@@ -61,17 +61,20 @@
         border: 2px solid white;
       }
 
-      .btn {
+    .btn {
         background: none;
         padding: 0px;
         border: none;
        }
-
+    a:link { text-decoration: none; }
+    a:visited { text-decoration: none; }
+    a:hover { text-decoration: none; }
+    a:active { text-decoration: none; }
 </style>
 <body>
 <div class="split left">
-    <a style="color:purple; padding-top: 20px;" href="/tables/">Tables</a>
-    <a style="color:purple; padding-top: 20px;" href="/logout/">Log out</a>
+    <a style="color:rgb(77, 122, 248); padding-top: 20px;" href="/tables/">Tables</a>
+    <a style="color:rgb(77, 122, 248); padding-top: 20px;" href="/logout/">Log out</a>
     <div class="top centered">
         {% if data[0] != null %}
         <h2>Order Details</h2>
@@ -88,10 +91,10 @@
 
 <div class="split right">
     <div class="centered">
-        <a href="/order/{{urlid[0][0]}}/2/"><button>Snack</button></a>
-        <a href="/order/{{urlid[0][0]}}/1/"><button>Appetizer</button></a>
-        <a href="/order/{{urlid[0][0]}}/3/"><button>Entree</button></a>
-        <a href="/order/{{urlid[0][0]}}/12/"><button>Dessert</button></a>
+        <a href="/order/{{urlid[0]}}/2/"><button>Snack</button></a>
+        <a href="/order/{{urlid[0]}}/1/"><button>Appetizer</button></a>
+        <a href="/order/{{urlid[0]}}/3/"><button>Entree</button></a>
+        <a href="/order/{{urlid[0]}}/12/"><button>Dessert</button></a>
         <div class="top">
             {% for n in menuItem %}
             <div>
