@@ -1,11 +1,9 @@
 <html>
-
 <style>
-
     body {
-        color: white;
-        font-family: Monaco;
-        font-size: 13pt;
+      color: white;
+      font-family: Monaco;
+      font-size: 13pt;
     }
     .split {
       height: 100%;
@@ -34,7 +32,6 @@
       transform: translate(-50%, -50%);
       text-align: center;
     }
-
 
     p {
       display: inline;
@@ -71,12 +68,10 @@
        }
 
 </style>
-<script>
-
-</script>
 <body>
 <div class="split left">
-    <a style="color:purple; padding-top: 20px;" href="/">Home</a>
+    <a style="color:purple; padding-top: 20px;" href="/tables/">Tables</a>
+    <a style="color:purple; padding-top: 20px;" href="/logout/">Log out</a>
     <div class="top centered">
         {% if data[0] != null %}
         <h2>Order Details</h2>
@@ -93,15 +88,15 @@
 
 <div class="split right">
     <div class="centered">
-        <a href="/order/{{urlid[0][0]}}/2"><button>Snack</button></a>
-        <a href="/order/{{urlid[0][0]}}/1"><button>Appetizer</button></a>
-        <a href="/order/{{urlid[0][0]}}/3"><button>Entree</button></a>
-        <a href="/order/{{urlid[0][0]}}/12"><button>Dessert</button></a>
+        <a href="/order/{{urlid[0][0]}}/2/"><button>Snack</button></a>
+        <a href="/order/{{urlid[0][0]}}/1/"><button>Appetizer</button></a>
+        <a href="/order/{{urlid[0][0]}}/3/"><button>Entree</button></a>
+        <a href="/order/{{urlid[0][0]}}/12/"><button>Dessert</button></a>
         <div class="top">
             {% for n in menuItem %}
             <div>
                 <button style="background-color: rgb(160, 176, 253); display:inline;">{{n[0]}}</button>
-                <form style="display:inline;" method="POST" action="/order/{{urlid[0]}}">
+                <form style="display:inline;" method="POST" action="/order/{{urlid[0]}}/">
                     <div style="display:inline;">
                         <button type="submit" id="add-order" class="btn">
                             <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="white" class="bi bi-plus-circle" viewBox="0 0 16 16">
