@@ -1,5 +1,7 @@
 <html>
 <style>
+<html>
+    <style>
     body {
         color: white;
         font-family: Monaco;
@@ -75,31 +77,43 @@
 <div class="split left">
     <a style="color:rgb(77, 122, 248); padding-top: 20px;" href="/tables/">Tables</a>
     <a style="color:rgb(77, 122, 248); padding-top: 20px;" href="/logout/">Log out</a>
-    <div class="top centered">
+    <div class="top" style="text-align:center">
         {% if data[0] != null %}
         <h2>Order Details</h2>
         {% for n in data %}
-        <div>
+    </div>
+    <div class="top">
+        <div style="vertical-align:left;">
+            <form style="display:inline; "vertical-align:middle;" method="POST" action="{{ url_for('delete')}}"">
+            <div style="display:inline-block;; vertical-align:left;">
+                <button style="display:inline-block; vertical-align:left; color:rgb(77, 122, 248); cursor: pointer; font-weight: bold; font-size: 17px;" type="delete" id="delete-order" class="btn">X
+                </button>
+            </div>
+            <div style="display: none">
+                <input name="table_ID" id="table_ID" value="{{urlid[0]}}" />
+                <input name="orderID" id="orderID" value="{{n[3]}}" />
+            </div>
+            </form>
             <p>{{n[0]}}</p>
             <p>${{n[1]}}</p>
         </div>
         {% endfor %}
-        <h3>Total: ${{total[0][0]}}</h3>
+        <h3 style="text-align:center">Total: ${{total[0][0]}}</h3>
         {% endif %}
     </div>
 </div>
 
 <div class="split right">
     <div class="centered">
-        <a href="/order/{{urlid[0]}}/2/"><button>Snack</button></a>
-        <a href="/order/{{urlid[0]}}/1/"><button>Appetizer</button></a>
-        <a href="/order/{{urlid[0]}}/3/"><button>Entree</button></a>
-        <a href="/order/{{urlid[0]}}/12/"><button>Dessert</button></a>
+        <a href="/order/{{urlid[0]}}/2/list/"><button>Snack</button></a>
+        <a href="/order/{{urlid[0]}}/1/list/"><button>Appetizer</button></a>
+        <a href="/order/{{urlid[0]}}/3/list/"><button>Entree</button></a>
+        <a href="/order/{{urlid[0]}}/12/list/"><button>Dessert</button></a>
         <div class="top">
             {% for n in menuItem %}
             <div>
                 <button style="background-color: rgb(160, 176, 253); display:inline;">{{n[0]}}</button>
-                <form style="display:inline;" method="POST" action="/order/{{urlid[0]}}/">
+                <form style="display:inline;" method="POST" action="/order/{{urlid[0]}}/add/">
                     <div style="display:inline;">
                         <button type="submit" id="add-order" class="btn">
                             <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="white" class="bi bi-plus-circle" viewBox="0 0 16 16">
@@ -109,7 +123,7 @@
                         </button>
                     </div>
                     <div style="display: none">
-                        <input name="table_ID" id="table_ID" value="{{urlid[0][0]}}" />
+                        <input name="table_ID" id="table_ID" value="{{urlid[0]}}" />
                         <input name="menu_item_ID" id="menu_item_ID" value="{{n[1]}}" />
                     </div>
                 </form>

@@ -93,7 +93,7 @@ def index():
     else:
         return redirect(url_for('login'))
 
-@app.route('/order/<id>/')
+@app.route('/order/<id>/list/')
 def order(id):
     if 'loggedin' in session and session['loggedin']== True:
         select_order_query = "SELECT mi.name, mi.price, oi.table_ID, oi.orderID FROM MenuItem mi JOIN OrderItems oi ON oi.menu_item_ID=mi.menuItemID AND oi.table_ID="+id+";"
@@ -117,7 +117,7 @@ def order(id):
     else:
         return redirect(url_for('login'))
 
-@app.route('/order/<id>/<menuItemTypeId>/')
+@app.route('/order/<id>/<menuItemTypeId>/list/')
 def menuItems(id, menuItemTypeId):
     if 'loggedin' in session and session['loggedin']== True:
         select_menu_item_query = "SELECT mi.name, mi.menuItemID FROM MenuItem mi WHERE mi.type_ID="+menuItemTypeId+";"
@@ -148,7 +148,7 @@ def menuItems(id, menuItemTypeId):
     else:
         return redirect(url_for('login'))
 
-@app.route('/order/<id>/', methods=['POST'])
+@app.route('/order/<id>/add/', methods=['POST'])
 def add(id):
     table_ID=request.form['table_ID']
     menu_item_ID=request.form['menu_item_ID']
@@ -158,6 +158,18 @@ def add(id):
     params["name"]= 'Tara'
     g.conn.execute(text('INSERT INTO OrderItems (menu_item_ID, table_ID, createdBy) VALUES (:menu_item_ID, :table_ID, :name)'), params)
     g.conn.commit()
+    return redirect(url_for('order', id=table_ID))
+
+@app.route('/order/delete/', methods=['POST'])
+def delete():
+    table_ID=request.form['table_ID']
+    orderID=request.form['orderID']
+    params = {}
+    params["table_ID"]= table_ID
+    params["orderID"]= orderID
+    g.conn.execute(text('DELETE FROM OrderItems WHERE orderID=:orderID'), params)
+    g.conn.commit()
+    print(table_ID)
     return redirect(url_for('order', id=table_ID))
 
 if __name__ == "__main__":
@@ -173,3 +185,4 @@ if __name__ == "__main__":
         print("running on %s:%d" % (HOST, PORT))
         app.run(host=HOST, port=PORT, debug=debug, threaded=threaded)
 run()
+
