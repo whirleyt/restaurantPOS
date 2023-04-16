@@ -111,6 +111,7 @@ def order(id):
         url=[]
         url.append(id)
         order_context = dict(data=order)
+        
         total_context = dict(total=order_total)
         url_id= dict(urlid=url)
         return render_template("order.html", **order_context, **total_context, **url_id)
@@ -120,7 +121,7 @@ def order(id):
 @app.route('/order/<id>/<menuItemTypeId>/list/')
 def menuItems(id, menuItemTypeId):
     if 'loggedin' in session and session['loggedin']== True:
-        select_menu_item_query = "SELECT mi.name, mi.menuItemID FROM MenuItem mi WHERE mi.type_ID="+menuItemTypeId+";"
+        select_menu_item_query = "SELECT mi.name, mi.menuItemID, mi.description FROM MenuItem mi WHERE mi.type_ID="+menuItemTypeId+";"
         cursor1 = g.conn.execute(text(select_menu_item_query))
         menuItems = []
         for result in cursor1:

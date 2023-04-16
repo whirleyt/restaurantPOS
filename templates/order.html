@@ -7,6 +7,39 @@
         font-family: Monaco;
         font-size: 13pt;
     }
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 100;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.4);
+    }
+
+    .modal-content {
+        background-color: #fefefe;
+        margin: 15% auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%;
+    }
+
+    .close {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+    }
+
+    .close:hover,
+    .close:focus {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+    }
     .split {
       height: 100%;
       width: 50%;
@@ -112,6 +145,15 @@
         <div class="top">
             {% for n in menuItem %}
             <div>
+                <button id="descBtn-{{n[1]}}" style="background-color: rgb(227, 210, 52); display:inline;" title="info about food" onclick="showDescription({{n[1]}})">?</button>
+                <!-- Add a new div with a class of "modal" for each menu item -->
+                <div id="descModal-{{n[1]}}" class="modal">
+                    <div class="modal-content">
+                        <span id="close-{{n[1]}}" class="close">&times;</span>
+                        <!-- Include the description inside the modal content -->
+                        <p>{{n[2]}}</p>
+                    </div>
+                </div>
                 <button style="background-color: rgb(160, 176, 253); display:inline;">{{n[0]}}</button>
                 <form style="display:inline;" method="POST" action="/order/{{urlid[0]}}/add/">
                     <div style="display:inline;">
@@ -132,5 +174,24 @@
         </div>
     </div>
 </div>
+<script>
+    function showDescription(id) {
+      var modal = document.getElementById("descModal-" + id);
+      var btn = document.getElementById("descBtn-" + id);
+      var span = document.getElementById("close-" + id);
+    
+      modal.style.display = "block";
+    
+      span.onclick = function() {
+        modal.style.display = "none";
+      };
+    
+      window.onclick = function(event) {
+        if (event.target == modal) {
+          modal.style.display = "none";
+        }
+      };
+    }
+  </script>
 </body>
 </html>

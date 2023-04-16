@@ -5,7 +5,7 @@ ca2970
 
 PostgreSQL account is on tjw2154@columbia.edu,
 VM Instance name cs4111-instance and connected with the second database:
-psql -U uni -h 34.28.53.86 -d project1
+psql -U tjw2154 -h 34.28.53.86 -d project1
 
 To run this application run: python server.py
 Port: 8111
